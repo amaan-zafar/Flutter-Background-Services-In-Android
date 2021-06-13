@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(MyApp());
@@ -20,19 +23,29 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   final String title;
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
+
+  void startServiceInPlatform() async {
+    if (Platform.isAndroid) {
+      var methodChannel = MethodChannel(
+          'com.example.backgroundservices.messages'); // Key can be anything
+      String data = await methodChannel.invokeMethod('startService');
+      print('Method channel returned $data');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: Center(
-        child: Text(
-          'You have pushed the button this many times:',
+        child: MaterialButton(
+          onPressed: startServiceInPlatform,
+          color: Colors.blue,
+          child: Text(
+            'Start Background Service',
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );

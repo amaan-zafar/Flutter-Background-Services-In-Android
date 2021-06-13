@@ -1,6 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.backgroundservices">
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- android:name
+        The fully qualified name of an Application subclass implemented for the application.
+        When the application process is started, this class is instantiated before any of the
+        application's components. -->
    <application
+        android:name=".MyApplication"
         android:label="backgroundservices"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -32,6 +38,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+       <service android:name=".MyService" android:enabled="true" android:exported="true"/>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
